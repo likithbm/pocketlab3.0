@@ -1,0 +1,2278 @@
+=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080f20">
+  <title>PocketLab 3.0 | STEM Virtual Laboratory</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .hidden,
+    .page:not(.active) {
+      display: none !important;
+    }
+
+    .pl-subject-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .pl-subject-tabs button {
+      background: #132744;
+      color: #d9edff;
+      border: 1px solid #315a85;
+      border-radius: 10px;
+      padding: 11px 17px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .pl-subject-tabs button:hover {
+      background: #21538b;
+      border-color: #5dc9ff;
+    }
+
+    .pl-physics-banner {
+      padding: 25px;
+      border-radius: 18px;
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(35, 140, 255, .25),
+          transparent 45%
+        ),
+        linear-gradient(135deg, #102a4b, #091426);
+      border: 1px solid #32618d;
+      margin-bottom: 22px;
+    }
+
+    .pl-physics-banner h2 {
+      margin: 8px 0;
+      color: #f0f8ff;
+    }
+
+    .pl-physics-banner p {
+      color: #a8c2dd;
+      line-height: 1.6;
+    }
+
+    .pl-physics-banner .eyebrow {
+      color: #66dfff;
+    }
+
+    .hero-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .hero-highlights span {
+      border: 1px solid rgba(150, 200, 255, .2);
+      background: rgba(255, 255, 255, .06);
+      border-radius: 20px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #dbeaff;
+    }
+
+    .discovery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+
+    .discovery-item {
+      padding: 17px;
+      background: #14243d;
+      border: 1px solid #294566;
+      border-radius: 14px;
+    }
+
+    .discovery-item strong,
+    .discovery-item small {
+      display: block;
+    }
+
+    .discovery-item small {
+      margin-top: 6px;
+      color: #9eb4cf;
+    }
+
+    .lab-tip {
+      padding: 14px;
+      border: 1px solid #2c5578;
+      border-radius: 12px;
+      background: #10243b;
+      color: #c2d9ef;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .discovery-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">⚗️</div>
+      <div>
+        <h2>PocketLab</h2>
+        <small>SCIENCE BEYOND CLASSROOMS</small>
+      </div>
+    </div>
+
+    <div class="sidebar-label">WORKSPACE</div>
+
+    <nav class="nav-menu">
+
+      <button class="nav-item active"
+              data-page="dashboard">
+        <span>▦</span> Dashboard
+      </button>
+
+      <button class="nav-item"
+              data-page="laboratory">
+        <span>⚗</span> Virtual Laboratory
+      </button>
+
+      <button class="nav-item"
+              data-page="subjects">
+        <span>▤</span> STEM Subjects
+      </button>
+
+      <button class="nav-item"
+              data-page="quiz">
+        <span>✦</span> Quiz Arena
+      </button>
+
+      <button class="nav-item"
+              data-page="achievements">
+        <span>🏆</span> Achievements
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="offline-card">
+        <span class="status-dot"></span>
+        <strong id="connectionStatus">
+          Checking connection...
+        </strong>
+        <p>Learning beyond internet barriers.</p>
+      </div>
+
+      <p class="sidebar-footer">
+        STEM FOR IMPACT 2026
+      </p>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN APP -->
+
+  <div class="app-container">
+
+    <header class="topbar">
+
+      <div class="breadcrumb">
+        <span>Workspace</span>
+        <span>/</span>
+        <strong id="pageTitle">Dashboard</strong>
+      </div>
+
+      <div class="top-actions">
+
+        <span class="top-date" id="todayDate"></span>
+
+        <select id="languageSelect">
+          <option value="en">English</option>
+          <option value="kn">ಕನ್ನಡ</option>
+          <option value="hi">हिंदी</option>
+          <option value="ta">தமிழ்</option>
+          <option value="te">తెలుగు</option>
+        </select>
+
+        <div class="avatar">ST</div>
+
+        <span class="student-name">
+          STEM Explorer
+        </span>
+
+      </div>
+
+    </header>
+
+    <main class="main-content">
+
+      <!-- DASHBOARD -->
+
+      <section id="dashboard" class="page active">
+
+        <div class="hero">
+
+          <div class="hero-content">
+
+            <div class="hero-badge">
+              ✦ POCKETLAB 3.0 · STEM FOR IMPACT
+            </div>
+
+            <h1>
+              Explore. Experiment.
+              <br>
+              <span>Understand everything.</span>
+            </h1>
+
+            <p>
+              Experience science through interactive
+              virtual laboratories, simulations,
+              quizzes and hands-on discovery.
+            </p>
+
+            <button class="primary-btn"
+                    data-go="laboratory">
+              Launch Virtual Lab →
+            </button>
+
+            <div class="hero-highlights">
+              <span>⚡ 20 Physics experiments</span>
+              <span>🧪 Four STEM subjects</span>
+              <span>🏆 Quizzes and achievements</span>
+            </div>
+
+          </div>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="hero-atom">⚛</div>
+            <span class="floating-icon float-one">🧪</span>
+            <span class="floating-icon float-two">💡</span>
+            <span class="floating-icon float-three">🧬</span>
+          </div>
+
+        </div>
+
+        <div class="discovery-strip">
+
+          <div class="discovery-item">
+            <strong>01 · Choose Your Level</strong>
+            <small>Learn at your own pace</small>
+          </div>
+
+          <div class="discovery-item">
+            <strong>02 · Experiment Live</strong>
+            <small>Adjust variables and observe</small>
+          </div>
+
+          <div class="discovery-item">
+            <strong>03 · Earn Achievements</strong>
+            <small>Complete challenges and quizzes</small>
+          </div>
+
+        </div>
+
+        <!-- LEARNING LEVELS -->
+
+        <section class="learning-level-section">
+
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">
+                PERSONALIZED LEARNING
+              </span>
+              <h2>Choose Your Learning Level 🎓</h2>
+            </div>
+          </div>
+
+          <p class="level-description">
+            Select your class for recommended experiments
+            and quizzes.
+          </p>
+
+          <div class="level-grid">
+
+            <button class="level-card"
+                    data-level="primary">
+              <span class="level-icon">🌱</span>
+              <strong>Class 1–5</strong>
+              <small>Little Scientists</small>
+            </button>
+
+            <button class="level-card"
+                    data-level="middle">
+              <span class="level-icon">🔬</span>
+              <strong>Class 6–8</strong>
+              <small>Young Explorers</small>
+            </button>
+
+            <button class="level-card"
+                    data-level="secondary">
+              <span class="level-icon">⚡</span>
+              <strong>Class 9–10</strong>
+              <small>STEM Champions</small>
+            </button>
+
+            <button class="level-card"
+                    data-level="senior">
+              <span class="level-icon">🧪</span>
+              <strong>Class 11–12</strong>
+              <small>Future Innovators</small>
+            </button>
+
+            <button class="level-card"
+                    data-level="college">
+              <span class="level-icon">🎓</span>
+              <strong>College</strong>
+              <small>Advanced Learners</small>
+            </button>
+
+          </div>
+
+          <p id="selectedLevelMessage"
+             class="selected-level-message">
+            Select your learning level.
+          </p>
+
+          <button class="primary-btn"
+                  data-go="laboratory">
+            Explore Experiments →
+          </button>
+
+        </section>
+
+        <!-- STATISTICS -->
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">
+              YOUR LEARNING JOURNEY
+            </span>
+            <h2>Learning Overview</h2>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <div class="stat-icon purple">⚗</div>
+            <span>Experiments Completed</span>
+            <h2 id="experimentsCount">0</h2>
+            <small>Keep experimenting</small>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon blue">✦</div>
+            <span>Knowledge Points</span>
+            <h2 id="pointsCount">0</h2>
+            <small>Earn rewards</small>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon orange">🏆</div>
+            <span>Badges Earned</span>
+            <h2 id="badgesCount">0</h2>
+            <small>Unlock achievements</small>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon green">✓</div>
+            <span>Quizzes Completed</span>
+            <h2 id="quizzesCount">0</h2>
+            <small>Test your knowledge</small>
+          </div>
+
+        </div>
+
+        <!-- SUBJECTS -->
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">EXPLORE STEM</span>
+            <h2>Choose a Subject</h2>
+          </div>
+
+          <button class="text-btn" data-go="subjects">
+            View All →
+          </button>
+        </div>
+
+        <div class="subject-grid">
+
+          <button class="subject-card physics"
+                  data-subject="physics">
+            <div class="subject-emoji">⚛️</div>
+            <span>01 / EXPLORE</span>
+            <h3>Physics</h3>
+            <p>
+              Electricity, motion, energy,
+              circuits and mechanics.
+            </p>
+            <strong>Explore Physics ↗</strong>
+          </button>
+
+          <button class="subject-card chemistry"
+                  data-subject="chemistry">
+            <div class="subject-emoji">🧪</div>
+            <span>02 / DISCOVER</span>
+            <h3>Chemistry</h3>
+            <p>
+              Acids, bases, reactions and molecules.
+            </p>
+            <strong>Explore Chemistry ↗</strong>
+          </button>
+
+          <button class="subject-card biology"
+                  data-subject="biology">
+            <div class="subject-emoji">🧬</div>
+            <span>03 / UNDERSTAND</span>
+            <h3>Biology</h3>
+            <p>
+              Plants, cells and living organisms.
+            </p>
+            <strong>Explore Biology ↗</strong>
+          </button>
+
+          <button class="subject-card mathematics"
+                  data-subject="mathematics">
+            <div class="subject-emoji">📐</div>
+            <span>04 / SOLVE</span>
+            <h3>Mathematics</h3>
+            <p>
+              Graphs, geometry, functions and logic.
+            </p>
+            <strong>Explore Mathematics ↗</strong>
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- VIRTUAL LABORATORY -->
+
+      <section id="laboratory" class="page">
+
+        <div class="page-intro">
+          <span class="eyebrow">
+            POCKETLAB 3.0 · INTERACTIVE SCIENCE
+          </span>
+          <h1>Virtual Laboratory ⚗️</h1>
+          <p>
+            Explore STEM through interactive
+            scientific experiments.
+          </p>
+        </div>
+
+        <div class="pl-subject-tabs">
+          <button data-subject="physics">⚡ Physics</button>
+          <button data-subject="chemistry">🧪 Chemistry</button>
+          <button data-subject="biology">🧬 Biology</button>
+          <button data-subject="mathematics">📐 Mathematics</button>
+        </div>
+
+        <div class="pl-physics-banner">
+          <span class="eyebrow">
+            ⚡ PHYSICS VIRTUAL LABORATORY
+          </span>
+
+          <h2>Discover the Laws of Physics</h2>
+
+          <p>
+            Explore circuits, moving cars, projectiles,
+            light, electricity, magnetism, waves,
+            pendulums and much more.
+          </p>
+        </div>
+
+        <div class="lab-toolbar">
+
+          <div>
+            <h2>Experiment Collection</h2>
+            <p id="labLevelMessage">
+              Choose an experiment to begin.
+            </p>
+          </div>
+
+          <select id="experimentFilter">
+            <option value="all">All Subjects</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="biology">Biology</option>
+            <option value="mathematics">Mathematics</option>
+          </select>
+
+        </div>
+
+        <div class="lab-tip">
+          💡 Adjust the controls in each experiment
+          to see how scientific variables affect results.
+        </div>
+
+        <!-- EXISTING EXPERIMENTS:
+             DO NOT DELETE THE CAR -->
+
+        <div class="experiment-grid">
+
+          <!-- ELECTRIC CIRCUIT -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="middle secondary senior college">
+
+            <div class="experiment-visual electric">💡</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">Interactive</span>
+
+              <h3>Electric Circuit Simulator</h3>
+
+              <p>
+                Explore voltage, resistance, current
+                and bulb brightness using Ohm's law.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="circuit">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- FORCE AND MOTION: CAR -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="primary middle secondary senior college">
+
+            <div class="experiment-visual electric">🚗</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">3D Simulation</span>
+
+              <h3>Force and Motion</h3>
+
+              <p>
+                Drive a 3D car, change force and mass,
+                and explore Newton's second law.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="motion">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- LIGHT REFLECTION -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="middle secondary senior college">
+
+            <div class="experiment-visual electric">🔦</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">Interactive</span>
+
+              <h3>Light Reflection</h3>
+
+              <p>
+                Direct a light ray at a mirror
+                and investigate reflection angles.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="reflection">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- PROJECTILE MOTION -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="secondary senior college">
+
+            <div class="experiment-visual electric">🏀</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">3D Simulation</span>
+
+              <h3>Projectile Motion Simulator</h3>
+
+              <p>
+                Launch a ball and explore trajectory,
+                maximum height and range.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="projectile">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- FLOATING AND SINKING -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="primary middle secondary">
+
+            <div class="experiment-visual electric">🚢</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">Interactive</span>
+
+              <h3>Floating or Sinking</h3>
+
+              <p>
+                Test objects in water and explore
+                density and buoyancy.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="floating">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- ADVANCED CIRCUIT -->
+
+          <article class="experiment-card"
+                   data-category="physics"
+                   data-recommended="senior college">
+
+            <div class="experiment-visual electric">🔋</div>
+
+            <div class="experiment-info">
+              <span class="tag">PHYSICS</span>
+              <span class="difficulty">Advanced</span>
+
+              <h3>Advanced Circuit Analysis</h3>
+
+              <p>
+                Compare series and parallel circuits,
+                equivalent resistance and current.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="advancedCircuit">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- CHEMISTRY -->
+
+          <article class="experiment-card"
+                   data-category="chemistry"
+                   data-recommended="middle secondary senior college">
+
+            <div class="experiment-visual chemistry">🧪</div>
+
+            <div class="experiment-info">
+              <span class="tag">CHEMISTRY</span>
+              <span class="difficulty">Interactive</span>
+
+              <h3>pH Indicator Laboratory</h3>
+
+              <p>
+                Explore acidic, basic and neutral
+                solutions using a pH indicator.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="ph">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- BIOLOGY -->
+
+          <article class="experiment-card"
+                   data-category="biology"
+                   data-recommended="primary middle secondary">
+
+            <div class="experiment-visual biology">🌱</div>
+
+            <div class="experiment-info">
+              <span class="tag">BIOLOGY</span>
+              <span class="difficulty">3D Simulation</span>
+
+              <h3>Plant Growth Simulator</h3>
+
+              <p>
+                Change sunlight and water to
+                explore plant growth.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="plant">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- MATHEMATICS -->
+
+          <article class="experiment-card"
+                   data-category="mathematics"
+                   data-recommended="middle secondary senior college">
+
+            <div class="experiment-visual mathematics">📈</div>
+
+            <div class="experiment-info">
+              <span class="tag">MATHEMATICS</span>
+              <span class="difficulty">Interactive</span>
+
+              <h3>Graph Explorer</h3>
+
+              <p>
+                Explore mathematical functions
+                by adjusting graph coefficients.
+              </p>
+
+              <button class="experiment-btn"
+                      data-experiment="graph">
+                ▶ Start
+              </button>
+            </div>
+
+          </article>
+
+          <!-- physics.js automatically adds
+               14 more Physics experiments here -->
+
+        </div>
+
+      </section>
+
+      <!-- EXPERIMENT WORKSPACE -->
+
+      <section id="experimentWorkspace" class="page">
+
+        <button class="back-btn"
+                data-go="laboratory">
+          ← Back to Laboratory
+        </button>
+
+        <div class="page-intro">
+
+          <span class="eyebrow">
+            INTERACTIVE VIRTUAL EXPERIMENT
+          </span>
+
+          <h1 id="activeExperimentTitle">
+            Experiment
+          </h1>
+
+          <p id="activeExperimentDescription">
+            Adjust the controls to explore science.
+          </p>
+
+        </div>
+
+        <div class="simulation-layout">
+
+          <div class="simulation-panel">
+
+            <div class="panel-header">
+              <h3>Simulation Workspace</h3>
+              <span class="live-label">
+                ● INTERACTIVE
+              </span>
+            </div>
+
+            <div id="simulationCanvas"
+                 class="simulation-canvas">
+            </div>
+
+          </div>
+
+          <div class="control-panel">
+
+            <div class="panel-header">
+              <h3>Experiment Controls</h3>
+            </div>
+
+            <div id="experimentControls"></div>
+
+            <div id="experimentResults"
+                 class="results-box">
+            </div>
+
+            <button id="completeExperiment"
+                    class="primary-btn full-width">
+              Complete Experiment ✓
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="learning-panel">
+
+          <h3>📖 Science Behind the Experiment</h3>
+
+          <div id="experimentExplanation"></div>
+
+        </div>
+
+      </section>
+
+      <!-- SUBJECTS PAGE -->
+
+      <section id="subjects" class="page">
+
+        <div class="page-intro">
+          <span class="eyebrow">EXPLORE SCIENCE</span>
+          <h1>STEM Subjects</h1>
+          <p>Choose your field of discovery.</p>
+        </div>
+
+        <div class="subject-grid subjects-page-grid">
+
+          <button class="subject-card physics"
+                  data-subject="physics">
+            <div class="subject-emoji">⚛️</div>
+            <span>PHYSICS LABORATORY</span>
+            <h3>Physics</h3>
+            <p>Electricity, mechanics, light and waves.</p>
+            <strong>Start Learning ↗</strong>
+          </button>
+
+          <button class="subject-card chemistry"
+                  data-subject="chemistry">
+            <div class="subject-emoji">🧪</div>
+            <span>CHEMISTRY LABORATORY</span>
+            <h3>Chemistry</h3>
+            <p>Solutions, molecules and reactions.</p>
+            <strong>Start Learning ↗</strong>
+          </button>
+
+          <button class="subject-card biology"
+                  data-subject="biology">
+            <div class="subject-emoji">🧬</div>
+            <span>BIOLOGY LABORATORY</span>
+            <h3>Biology</h3>
+            <p>Cells, plants and living organisms.</p>
+            <strong>Start Learning ↗</strong>
+          </button>
+
+          <button class="subject-card mathematics"
+                  data-subject="mathematics">
+            <div class="subject-emoji">📐</div>
+            <span>MATHEMATICS LABORATORY</span>
+            <h3>Mathematics</h3>
+            <p>Functions, geometry and graphs.</p>
+            <strong>Start Learning ↗</strong>
+          </button>
+
+        </div>
+
+      </section>
+
+      <!-- QUIZ ARENA -->
+
+      <section id="quiz" class="page">
+
+        <div class="page-intro">
+          <span class="eyebrow">
+            CHALLENGE YOUR KNOWLEDGE
+          </span>
+          <h1>Quiz Arena 🧠</h1>
+          <p>
+            Answer questions and earn knowledge points.
+          </p>
+        </div>
+
+        <div class="quiz-container">
+
+          <div id="quizStart" class="quiz-start">
+
+            <div class="quiz-illustration">🎯</div>
+
+            <h2>Ready for a STEM Challenge?</h2>
+
+            <p>
+              Test your knowledge across STEM subjects.
+            </p>
+
+            <p id="quizLevelInfo"
+               class="quiz-level-info">
+              Questions for your selected level.
+            </p>
+
+            <label for="quizSubject">
+              Choose a Subject
+            </label>
+
+            <select id="quizSubject">
+              <option value="all">Mixed STEM</option>
+              <option value="physics">Physics</option>
+              <option value="chemistry">Chemistry</option>
+              <option value="biology">Biology</option>
+              <option value="mathematics">Mathematics</option>
+            </select>
+
+            <button id="startQuizBtn"
+                    class="primary-btn">
+              Start Challenge →
+            </button>
+
+          </div>
+
+          <div id="quizGame"
+               class="quiz-game hidden">
+
+            <div class="quiz-progress-header">
+              <span id="questionCounter">Question 1</span>
+              <span id="quizScore">Score: 0</span>
+            </div>
+
+            <div class="progress-track">
+              <div id="quizProgressBar"
+                   class="progress-fill"></div>
+            </div>
+
+            <h2 id="questionText"></h2>
+
+            <div id="answerOptions"
+                 class="answer-options"></div>
+
+            <p id="answerFeedback"></p>
+
+            <button id="nextQuestionBtn"
+                    class="primary-btn hidden">
+              Next Question →
+            </button>
+
+          </div>
+
+          <div id="quizResult"
+               class="quiz-result hidden">
+
+            <div class="quiz-illustration">🏆</div>
+
+            <h2>Challenge Completed!</h2>
+
+            <p id="finalScore"></p>
+            <p id="quizReward"></p>
+
+            <button id="retryQuizBtn"
+                    class="primary-btn">
+              Try Another Quiz →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ACHIEVEMENTS -->
+
+      <section id="achievements" class="page">
+
+        <div class="page-intro">
+          <span class="eyebrow">
+            CELEBRATE YOUR PROGRESS
+          </span>
+          <h1>Achievements 🏆</h1>
+          <p>
+            Earn badges as you explore science.
+          </p>
+        </div>
+
+        <div class="achievement-summary">
+
+          <div>
+            <span>TOTAL KNOWLEDGE POINTS</span>
+            <h2 id="achievementPoints">0</h2>
+          </div>
+
+          <div>
+            <span>BADGES UNLOCKED</span>
+            <h2 id="achievementBadgeCount">0 / 4</h2>
+          </div>
+
+        </div>
+
+        <div class="badges-grid">
+
+          <div class="badge-card locked"
+               data-badge="firstExperiment">
+            <div class="badge-icon">🔬</div>
+            <h3>First Discovery</h3>
+            <p>Complete your first experiment.</p>
+            <span class="badge-status">Locked</span>
+          </div>
+
+          <div class="badge-card locked"
+               data-badge="scientist">
+            <div class="badge-icon">⚗️</div>
+            <h3>Young Scientist</h3>
+            <p>Complete four experiments.</p>
+            <span class="badge-status">Locked</span>
+          </div>
+
+          <div class="badge-card locked"
+               data-badge="quizMaster">
+            <div class="badge-icon">🧠</div>
+            <h3>Quiz Master</h3>
+            <p>Score 100% in a quiz.</p>
+            <span class="badge-status">Locked</span>
+          </div>
+
+          <div class="badge-card locked"
+               data-badge="explorer">
+            <div class="badge-icon">🌟</div>
+            <h3>STEM Explorer</h3>
+            <p>Earn 200 knowledge points.</p>
+            <span class="badge-status">Locked</span>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- NOTIFICATIONS -->
+
+  <div id="toast"
+       class="toast hidden"
+       role="status"
+       aria-live="polite"></div>
+
+  <!-- JAVASCRIPT FILES -->
+
+  <script src="script.js" defer></script>
+  <script src="visuals.js" defer></script>
+  <script src="physics.js" defer></script>
+  <script src="chemistry.js" defer></script>
+  <script src="maths.js" defer></script>
+  <script src="quiz.js" defer></script>
+  <script src="pocketlab-api.js" defer></script>
+  <script src="pocketlab-3d.js"></script>
+
+
+
+<script>
+/* POCKETLAB — KANNADA / HINDI / ENGLISH UI */
+(() => {
+  "use strict";
+
+  if (window.__pocketlabLanguagesV1) return;
+  window.__pocketlabLanguagesV1 = true;
+
+  const entries = [
+    ["Dashboard", "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", "डैशबोर्ड"],
+    ["Virtual Laboratory", "ವರ್ಚುವಲ್ ಪ್ರಯೋಗಾಲಯ", "वर्चुअल प्रयोगशाला"],
+    ["STEM Subjects", "ಸ್ಟೆಮ್ ವಿಷಯಗಳು", "स्टेम विषय"],
+    ["Quiz Arena", "ರಸಪ್ರಶ್ನೆ ಸ್ಪರ್ಧೆ", "क्विज़ प्रतियोगिता"],
+    ["Achievements", "ಸಾಧನೆಗಳು", "उपलब्धियाँ"],
+    ["Workspace", "ಕಾರ್ಯಸ್ಥಳ", "कार्यस्थल"],
+    ["Logout", "ಲಾಗ್ ಔಟ್", "लॉग आउट"],
+    ["STEM Explorer", "ಸ್ಟೆಮ್ ಅನ್ವೇಷಕ", "स्टेम अन्वेषक"],
+    ["SCIENCE BEYOND CLASSROOMS", "ತರಗತಿಯಾಚೆ ವಿಜ್ಞಾನ", "कक्षा से परे विज्ञान"],
+
+    ["Physics", "ಭೌತಶಾಸ್ತ್ರ", "भौतिकी"],
+    ["Chemistry", "ರಸಾಯನಶಾಸ್ತ್ರ", "रसायन विज्ञान"],
+    ["Biology", "ಜೀವಶಾಸ್ತ್ರ", "जीव विज्ञान"],
+    ["Mathematics", "ಗಣಿತ", "गणित"],
+    ["All Subjects", "ಎಲ್ಲಾ ವಿಷಯಗಳು", "सभी विषय"],
+    ["Choose a Subject", "ವಿಷಯವನ್ನು ಆರಿಸಿ", "विषय चुनें"],
+
+    ["Explore. Experiment.", "ಅನ್ವೇಷಿಸಿ. ಪ್ರಯೋಗಿಸಿ.", "खोजें। प्रयोग करें।"],
+    ["Understand everything.", "ಎಲ್ಲವನ್ನೂ ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ.", "सब कुछ समझें।"],
+    ["Launch Virtual Lab", "ವರ್ಚುವಲ್ ಲ್ಯಾಬ್ ತೆರೆಯಿರಿ", "वर्चुअल लैब खोलें"],
+    ["Explore Experiments", "ಪ್ರಯೋಗಗಳನ್ನು ಅನ್ವೇಷಿಸಿ", "प्रयोगों को देखें"],
+    ["View All", "ಎಲ್ಲವನ್ನೂ ನೋಡಿ", "सभी देखें"],
+    ["Learning Overview", "ಕಲಿಕೆಯ ಅವಲೋಕನ", "सीखने का अवलोकन"],
+    ["Choose Your Learning Level", "ನಿಮ್ಮ ಕಲಿಕೆಯ ಮಟ್ಟವನ್ನು ಆರಿಸಿ", "अपना अध्ययन स्तर चुनें"],
+    ["Experiments Completed", "ಪೂರ್ಣಗೊಂಡ ಪ್ರಯೋಗಗಳು", "पूरे किए गए प्रयोग"],
+    ["Knowledge Points", "ಜ್ಞಾನ ಅಂಕಗಳು", "ज्ञान अंक"],
+    ["Badges Earned", "ಪಡೆದ ಬ್ಯಾಡ್ಜ್‌ಗಳು", "प्राप्त बैज"],
+    ["Quizzes Completed", "ಪೂರ್ಣಗೊಂಡ ರಸಪ್ರಶ್ನೆಗಳು", "पूरे हुए क्विज़"],
+    ["Class 1–5", "ತರಗತಿ ೧–೫", "कक्षा १–५"],
+    ["Class 6–8", "ತರಗತಿ ೬–೮", "कक्षा ६–८"],
+    ["Class 9–10", "ತರಗತಿ ೯–೧೦", "कक्षा ९–१०"],
+    ["Class 11–12", "ತರಗತಿ ೧೧–೧೨", "कक्षा ११–१२"],
+    ["College", "ಕಾಲೇಜು", "कॉलेज"],
+
+    ["Experiment Collection", "ಪ್ರಯೋಗಗಳ ಸಂಗ್ರಹ", "प्रयोग संग्रह"],
+    ["Simulation Workspace", "ಸಿಮ್ಯುಲೇಶನ್ ಕಾರ್ಯಸ್ಥಳ", "सिमुलेशन कार्यक्षेत्र"],
+    ["Experiment Controls", "ಪ್ರಯೋಗ ನಿಯಂತ್ರಣಗಳು", "प्रयोग नियंत्रण"],
+    ["INTERACTIVE VIRTUAL EXPERIMENT", "ಸಂವಾದಾತ್ಮಕ ವರ್ಚುವಲ್ ಪ್ರಯೋಗ", "इंटरैक्टिव वर्चुअल प्रयोग"],
+    ["INTERACTIVE", "ಸಂವಾದಾತ್ಮಕ", "इंटरैक्टिव"],
+    ["LIVE", "ನೇರ", "लाइव"],
+    ["Experiment", "ಪ್ರಯೋಗ", "प्रयोग"],
+    ["Formula", "ಸೂತ್ರ", "सूत्र"],
+    ["Explanation", "ವಿವರಣೆ", "व्याख्या"],
+    ["Science Behind the Experiment", "ಪ್ರಯೋಗದ ಹಿಂದಿನ ವಿಜ್ಞಾನ", "प्रयोग का विज्ञान"],
+
+    ["Start", "ಪ್ರಾರಂಭಿಸಿ", "शुरू करें"],
+    ["Pause", "ವಿರಾಮ", "रोकें"],
+    ["Play", "ಮುಂದುವರಿಸಿ", "चलाएँ"],
+    ["Resume", "ಮುಂದುವರಿಸಿ", "फिर शुरू करें"],
+    ["Stop", "ನಿಲ್ಲಿಸಿ", "बंद करें"],
+    ["Reset", "ಮರುಹೊಂದಿಸಿ", "रीसेट करें"],
+    ["Submit", "ಸಲ್ಲಿಸಿ", "जमा करें"],
+    ["Next", "ಮುಂದೆ", "अगला"],
+    ["Next Question", "ಮುಂದಿನ ಪ್ರಶ್ನೆ", "अगला प्रश्न"],
+    ["Complete Experiment", "ಪ್ರಯೋಗ ಪೂರ್ಣಗೊಳಿಸಿ", "प्रयोग पूरा करें"],
+    ["Back to Laboratory", "ಪ್ರಯೋಗಾಲಯಕ್ಕೆ ಹಿಂತಿರುಗಿ", "प्रयोगशाला में वापस जाएँ"],
+
+    ["Ready", "ಸಿದ್ಧ", "तैयार"],
+    ["Running", "ಚಾಲನೆಯಲ್ಲಿದೆ", "चल रहा है"],
+    ["Paused", "ವಿರಾಮದಲ್ಲಿದೆ", "रुका हुआ"],
+    ["Stopped", "ನಿಲ್ಲಿಸಲಾಗಿದೆ", "बंद किया गया"],
+    ["Status", "ಸ್ಥಿತಿ", "स्थिति"],
+    ["Elapsed time", "ಕಳೆದ ಸಮಯ", "बीता समय"],
+    ["Speed", "ವೇಗ", "गति"],
+    ["Distance", "ದೂರ", "दूरी"],
+    ["Acceleration", "ತ್ವರಣ", "त्वरण"],
+    ["Force", "ಬಲ", "बल"],
+    ["Mass", "ದ್ರವ್ಯರಾಶಿ", "द्रव्यमान"],
+    ["Angle", "ಕೋನ", "कोण"],
+    ["Length", "ಉದ್ದ", "लंबाई"],
+    ["Gravity", "ಗುರುತ್ವಾಕರ್ಷಣೆ", "गुरुत्वाकर्षण"],
+    ["Voltage", "ವೋಲ್ಟೇಜ್", "वोल्टेज"],
+    ["Resistance", "ಪ್ರತಿರೋಧ", "प्रतिरोध"],
+    ["Current", "ವಿದ್ಯುತ್ ಪ್ರವಾಹ", "विद्युत धारा"],
+    ["Temperature", "ತಾಪಮಾನ", "तापमान"],
+    ["Volume", "ಪರಿಮಾಣ", "आयतन"],
+    ["Frequency", "ಆವೃತ್ತಿ", "आवृत्ति"],
+    ["Magnet strength", "ಕಾಂತದ ಬಲ", "चुंबक की शक्ति"],
+    ["Magnet rotation", "ಕಾಂತದ ತಿರುಗುವಿಕೆ", "चुंबक का घूर्णन"],
+    ["Coil turns", "ಸುರುಳಿಯ ಸುತ್ತುಗಳು", "कुंडली के चक्कर"],
+    ["Polarity", "ಧ್ರುವೀಯತೆ", "ध्रुवता"],
+    ["Concentration", "ಸಾಂದ್ರತೆ", "सांद्रता"],
+    ["Graph Type", "ಗ್ರಾಫ್ ಪ್ರಕಾರ", "ग्राफ़ का प्रकार"],
+    ["Coefficient a", "ಗುಣಾಂಕ a", "गुणांक a"],
+    ["Coefficient b", "ಗುಣಾಂಕ b", "गुणांक b"],
+    ["Coefficient c", "ಗುಣಾಂಕ c", "गुणांक c"],
+
+    ["Question", "ಪ್ರಶ್ನೆ", "प्रश्न"],
+    ["Answer", "ಉತ್ತರ", "उत्तर"],
+    ["Score", "ಅಂಕ", "अंक"],
+    ["Correct", "ಸರಿಯಾಗಿದೆ", "सही"],
+    ["Incorrect", "ತಪ್ಪಾಗಿದೆ", "गलत"],
+    ["Locked", "ಲಾಕ್ ಆಗಿದೆ", "लॉक है"],
+    ["Unlocked", "ಅನ್ಲಾಕ್ ಆಗಿದೆ", "अनलॉक हुआ"],
+    ["Start Challenge", "ಸವಾಲು ಆರಂಭಿಸಿ", "चुनौती शुरू करें"],
+    ["Challenge Completed!", "ಸವಾಲು ಪೂರ್ಣಗೊಂಡಿದೆ!", "चुनौती पूरी हुई!"],
+    ["Try Another Quiz", "ಮತ್ತೊಂದು ರಸಪ್ರಶ್ನೆ ಪ್ರಯತ್ನಿಸಿ", "एक और क्विज़ आज़माएँ"],
+
+    ["Electric Circuit Simulator", "ವಿದ್ಯುತ್ ಮಂಡಲ ಸಿಮ್ಯುಲೇಟರ್", "विद्युत परिपथ सिमुलेटर"],
+    ["Force and Motion", "ಬಲ ಮತ್ತು ಚಲನೆ", "बल और गति"],
+    ["Light Reflection", "ಬೆಳಕಿನ ಪ್ರತಿಫಲನ", "प्रकाश का परावर्तन"],
+    ["Projectile Motion Simulator", "ಪ್ರಕ್ಷೇಪಕ ಚಲನೆ ಸಿಮ್ಯುಲೇಟರ್", "प्रक्षेप्य गति सिमुलेटर"],
+    ["Floating or Sinking", "ತೇಲುವುದು ಅಥವಾ ಮುಳುಗುವುದು", "तैरना या डूबना"],
+    ["Advanced Circuit Analysis", "ಸುಧಾರಿತ ಮಂಡಲ ವಿಶ್ಲೇಷಣೆ", "उन्नत परिपथ विश्लेषण"],
+    ["Ramp & Friction", "ಇಳಿಜಾರು ಮತ್ತು ಘರ್ಷಣೆ", "ढलान और घर्षण"],
+    ["Car Motion & Braking", "ಕಾರು ಚಲನೆ ಮತ್ತು ಬ್ರೇಕ್", "कार की गति और ब्रेक"],
+    ["Colliding Carts", "ಡಿಕ್ಕಿ ಹೊಡೆಯುವ ಗಾಡಿಗಳು", "टकराने वाली गाड़ियाँ"],
+    ["Animated Magnetic Field", "ಚಲಿಸುವ ಕಾಂತಕ್ಷೇತ್ರ", "गतिशील चुंबकीय क्षेत्र"],
+    ["Electromagnet & Coil", "ವಿದ್ಯುತ್ಕಾಂತ ಮತ್ತು ಸುರುಳಿ", "विद्युतचुंबक और कुंडली"],
+    ["Electric Motor", "ವಿದ್ಯುತ್ ಮೋಟಾರ್", "विद्युत मोटर"],
+    ["Simple Pendulum", "ಸರಳ ಲೋಲಕ", "सरल लोलक"],
+    ["Thermal Expansion", "ಉಷ್ಣ ವಿಸ್ತರಣೆ", "ऊष्मीय प्रसार"],
+    ["Photoelectric Effect", "ದ್ಯುತಿವಿದ್ಯುತ್ ಪರಿಣಾಮ", "प्रकाश विद्युत प्रभाव"],
+    ["Electromagnetic Induction", "ವಿದ್ಯುತ್ಕಾಂತೀಯ ಪ್ರೇರಣೆ", "विद्युतचुंबकीय प्रेरण"],
+
+    ["Photosynthesis Studio", "ದ್ಯುತಿಸಂಶ್ಲೇಷಣೆ ಪ್ರಯೋಗ", "प्रकाश संश्लेषण प्रयोग"],
+    ["Osmosis & Cell Membrane", "ಪರಾಸರಣ ಮತ್ತು ಕೋಶಪೊರೆ", "परासरण और कोशिका झिल्ली"],
+    ["Heartbeat & Circulation", "ಹೃದಯಬಡಿತ ಮತ್ತು ರಕ್ತಸಂಚಾರ", "हृदयगति और रक्त परिसंचरण"],
+    ["Cell Division (Mitosis)", "ಕೋಶ ವಿಭಜನೆ", "कोशिका विभाजन"],
+    ["DNA Replication Lab", "ಡಿಎನ್‌ಎ ನಕಲು ಪ್ರಯೋಗ", "डीएनए प्रतिकृति प्रयोग"],
+    ["Neuron & Nerve Impulse", "ನರಕೋಶ ಮತ್ತು ನರ ಸಂಕೇತ", "न्यूरॉन और तंत्रिका आवेग"],
+    ["Seed Germination & Growth", "ಬೀಜ ಮೊಳಕೆ ಮತ್ತು ಬೆಳವಣಿಗೆ", "बीज अंकुरण और वृद्धि"],
+    ["Lungs & Breathing", "ಶ್ವಾಸಕೋಶ ಮತ್ತು ಉಸಿರಾಟ", "फेफड़े और श्वसन"],
+    ["Plant Growth Simulator", "ಸಸ್ಯ ಬೆಳವಣಿಗೆಯ ಸಿಮ್ಯುಲೇಟರ್", "पौधे की वृद्धि का सिमुलेटर"],
+
+    ["pH Indicator Laboratory", "ಪಿಎಚ್ ಸೂಚಕ ಪ್ರಯೋಗಾಲಯ", "पीएच सूचक प्रयोगशाला"],
+    ["Periodic Table Explorer", "ಆವರ್ತಕ ಕೋಷ್ಟಕ ಅನ್ವೇಷಕ", "आवर्त सारणी अन्वेषक"],
+    ["Chemical Bonding", "ರಾಸಾಯನಿಕ ಬಂಧನ", "रासायनिक बंधन"],
+    ["Chemical Reaction Rates", "ರಾಸಾಯನಿಕ ಕ್ರಿಯೆಯ ವೇಗ", "रासायनिक अभिक्रिया की दर"],
+    ["States of Matter", "ದ್ರವ್ಯದ ಸ್ಥಿತಿಗಳು", "पदार्थ की अवस्थाएँ"],
+    ["Separation Techniques", "ಬೇರ್ಪಡಿಸುವ ವಿಧಾನಗಳು", "पृथक्करण विधियाँ"],
+    ["Acid-Base Titration", "ಅಮ್ಲ-ಕ್ಷಾರ ಟೈಟ್ರೇಶನ್", "अम्ल-क्षार अनुमापन"],
+    ["Electrolysis of Water", "ನೀರಿನ ವಿದ್ಯುದ್ವಿಭಜನೆ", "जल का विद्युत अपघटन"],
+    ["Gas Laws Simulator", "ಅನಿಲ ನಿಯಮಗಳ ಸಿಮ್ಯುಲೇಟರ್", "गैस नियम सिमुलेटर"],
+    ["Solubility Simulator", "ದ್ರಾವಣೀಯತೆ ಸಿಮ್ಯುಲೇಟರ್", "विलेयता सिमुलेटर"],
+    ["Paper Chromatography", "ಕಾಗದ ವರ್ಣಲೇಖನ", "कागज़ वर्णलेखन"],
+    ["Chemical Reactions", "ರಾಸಾಯನಿಕ ಕ್ರಿಯೆಗಳು", "रासायनिक अभिक्रियाएँ"],
+
+    ["Graph Explorer", "ಗ್ರಾಫ್ ಅನ್ವೇಷಕ", "ग्राफ़ अन्वेषक"],
+    ["Quadratic Equations", "ವರ್ಗ ಸಮೀಕರಣಗಳು", "द्विघात समीकरण"],
+    ["Interactive Geometry", "ಸಂವಾದಾತ್ಮಕ ಜ್ಯಾಮಿತಿ", "इंटरैक्टिव ज्यामिति"],
+    ["Trigonometry Simulator", "ತ್ರಿಕೋನಮಿತಿ ಸಿಮ್ಯುಲೇಟರ್", "त्रिकोणमिति सिमुलेटर"],
+    ["Pythagoras Theorem", "ಪೈಥಾಗರಸ್ ಪ್ರಮೇಯ", "पाइथागोरस प्रमेय"],
+    ["Probability Laboratory", "ಸಂಭವನೀಯತೆ ಪ್ರಯೋಗಾಲಯ", "प्रायिकता प्रयोगशाला"],
+    ["Statistics Visualizer", "ಸಂಖ್ಯಾಶಾಸ್ತ್ರ ದೃಶ್ಯೀಕರಣ", "सांख्यिकी दृश्यांकन"],
+    ["Geometric Transformations", "ಜ್ಯಾಮಿತೀಯ ರೂಪಾಂತರಗಳು", "ज्यामितीय रूपांतरण"],
+    ["Calculus — Derivatives", "ಕಲನಶಾಸ್ತ್ರ — ಅವಕಲನಗಳು", "कलन — अवकलज"],
+    ["Fractions Visualizer", "ಭಿನ್ನರಾಶಿ ದೃಶ್ಯೀಕರಣ", "भिन्न दृश्यांकन"]
+  ];
+
+  const dictionaries = {
+    kn: new Map(entries.map(row => [row[0].toLowerCase(), row[1]])),
+    hi: new Map(entries.map(row => [row[0].toLowerCase(), row[2]]))
+  };
+
+  const originals = new WeakMap();
+
+  let language = "en";
+  let pending = new Set();
+  let scheduled = false;
+
+  // Do not change internal experiment titles or readings:
+  // existing JS uses some of them to identify simulations.
+  const protectedSelectors = [
+    "#activeExperimentTitle",
+    "#pmathTitle",
+    "#chem4-title",
+    "#pageTitle",
+    "#plpStatus",
+    "#plbioStatus",
+    "#plxStatus",
+    "#experimentResults strong",
+    "#experimentResults small",
+    "#plbio-metrics strong",
+    "#plbio-metrics small",
+    ".pf3-tile small",
+    ".plx-reading small",
+    ".plbio-reading small"
+  ].join(",");
+
+  function translate(text) {
+    if (language === "en") return text;
+
+    const dict = dictionaries[language];
+    const cleaned = text.trim();
+
+    if (!cleaned) return text;
+
+    let result = dict.get(cleaned.toLowerCase());
+
+    // Preserve symbols such as ▶, ↻, ✓ and →.
+    if (!result) {
+      const match = cleaned.match(
+        /^([^\p{L}\p{N}]*)(.*?)([^\p{L}\p{N}]*)$/u
+      );
+
+      if (match) {
+        const found = dict.get(match[2].trim().toLowerCase());
+
+        if (found) {
+          result = match[1] + found + match[3];
+        }
+      }
+    }
+
+    // Translate dynamic values, e.g. "Status: Ready".
+    if (!result) {
+      const match = cleaned.match(/^(.{2,55}?)(\s*:\s*)(.+)$/s);
+
+      if (match) {
+        const left = dict.get(match[1].trim().toLowerCase());
+        const right = dict.get(match[3].trim().toLowerCase());
+
+        if (left || right) {
+          result =
+            (left || match[1]) +
+            match[2] +
+            (right || match[3]);
+        }
+      }
+    }
+
+    if (!result) {
+      const match = cleaned.match(/^(Question|Score|Class)\s+(\d+)$/i);
+
+      if (match) {
+        result =
+          (dict.get(match[1].toLowerCase()) || match[1]) +
+          " " + match[2];
+      }
+    }
+
+    if (!result) return text;
+
+    return (
+      text.match(/^\s*/)[0] +
+      result +
+      text.match(/\s*$/)[0]
+    );
+  }
+
+  // Translate visible titles/buttons without altering their
+  // original English textContent, so existing JS still works.
+  function translateVisual(element) {
+    if (!element?.isConnected) return;
+
+    const english = element.textContent.trim();
+    const translated = translate(english);
+
+    if (language !== "en" && translated !== english) {
+      if (!element.classList.contains("pllang-title") &&
+          !element.classList.contains("pllang-button")) {
+        element.style.setProperty(
+          "--pllang-size",
+          getComputedStyle(element).fontSize
+        );
+      }
+
+      element.dataset.plVisualLanguage = translated;
+
+      element.classList.add(
+        element.matches("button")
+          ? "pllang-button"
+          : "pllang-title"
+      );
+
+    } else {
+      element.classList.remove("pllang-title", "pllang-button");
+      element.style.removeProperty("--pllang-size");
+      delete element.dataset.plVisualLanguage;
+    }
+  }
+
+  function translateTextNode(node) {
+    const parent = node.parentElement;
+
+    if (!parent || !parent.isConnected) return;
+
+    if (parent.closest(
+      "script,style,noscript,textarea,code,pre,#languageSelect"
+    )) return;
+
+    const protectedElement = parent.closest(
+      protectedSelectors + ",button"
+    );
+
+    if (protectedElement) {
+      translateVisual(protectedElement);
+      return;
+    }
+
+    let saved = originals.get(node);
+
+    if (!saved) {
+      saved = {
+        english: node.nodeValue,
+        visible: node.nodeValue
+      };
+
+      originals.set(node, saved);
+
+    } else if (node.nodeValue !== saved.visible) {
+      // The actual app has updated the label.
+      saved.english = node.nodeValue;
+    }
+
+    const next = translate(saved.english);
+
+    saved.visible = next;
+
+    if (node.nodeValue !== next) {
+      node.nodeValue = next;
+    }
+  }
+
+  function translateTree(root) {
+    if (!root || !root.isConnected) return;
+
+    if (root.nodeType === Node.TEXT_NODE) {
+      translateTextNode(root);
+      return;
+    }
+
+    if (root.nodeType !== Node.ELEMENT_NODE) return;
+
+    if (root.matches(
+      "script,style,noscript,textarea,code,pre"
+    )) return;
+
+    if (root.matches("button") ||
+        root.matches(protectedSelectors)) {
+      translateVisual(root);
+      return;
+    }
+
+    const walker = document.createTreeWalker(
+      root,
+      NodeFilter.SHOW_TEXT
+    );
+
+    let node;
+
+    while ((node = walker.nextNode())) {
+      translateTextNode(node);
+    }
+  }
+
+  function updateQueued() {
+    scheduled = false;
+
+    const nodes = [...pending];
+    pending.clear();
+
+    nodes.forEach(translateTree);
+  }
+
+  function queueTranslation(node) {
+    pending.add(node);
+
+    if (!scheduled) {
+      scheduled = true;
+      requestAnimationFrame(updateQueued);
+    }
+  }
+
+  function setLanguage(selected) {
+    language = ["en", "kn", "hi"].includes(selected)
+      ? selected
+      : "en";
+
+    try {
+      localStorage.setItem("pocketlab-language", language);
+    } catch {}
+
+    document.documentElement.lang = language;
+
+    const select = document.getElementById("languageSelect");
+
+    if (select) {
+      if (!select.querySelector('option[value="hi"]')) {
+        const option = document.createElement("option");
+        option.value = "hi";
+        option.textContent = "हिन्दी";
+        select.append(option);
+      }
+
+      select.value = language;
+    }
+
+    queueTranslation(document.body);
+  }
+
+  const style = document.createElement("style");
+
+  style.textContent = `
+    .pllang-title {
+      font-size: 0 !important;
+    }
+
+    .pllang-title::after {
+      content: attr(data-pl-visual-language);
+      font-size: var(--pllang-size, 20px);
+      font-weight: inherit;
+      line-height: 1.25;
+    }
+
+    .pllang-button {
+      font-size: 0 !important;
+    }
+
+    .pllang-button::after {
+      content: attr(data-pl-visual-language);
+      font-size: var(--pllang-size, 13px);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .pllang-button > span {
+      font-size: 0 !important;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  // Capturing prevents the old script.js handler from
+  // switching Kannada back to English.
+  document.addEventListener("change", event => {
+    if (event.target?.id !== "languageSelect") return;
+
+    event.stopImmediatePropagation();
+    setLanguage(event.target.value);
+
+  }, true);
+
+  function initialize() {
+    const observer = new MutationObserver(records => {
+      for (const record of records) {
+        if (record.type === "characterData") {
+          queueTranslation(record.target);
+        }
+
+        record.addedNodes.forEach(queueTranslation);
+      }
+    });
+
+    observer.observe(document.body, {
+      subtree: true,
+      childList: true,
+      characterData: true
+    });
+
+    let savedLanguage = "en";
+
+    try {
+      savedLanguage =
+        localStorage.getItem("pocketlab-language") || "en";
+    } catch {}
+
+    setLanguage(savedLanguage);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initialize
+    );
+  } else {
+    initialize();
+  }
+})();
+</script>
+
+</body>
+</html>
+
+<script>
+/* ================================================
+   POCKETLAB — ADD TAMIL AND TELUGU
+   APPEND-ONLY: DO NOT DELETE EXISTING CODE
+================================================ */
+
+(() => {
+  "use strict";
+
+  if (window.__plTamilTeluguAppend) return;
+  window.__plTamilTeluguAppend = true;
+
+  const rows = [
+    ["Dashboard","முகப்புப் பலகை","డ్యాష్‌బోర్డ్"],
+    ["Workspace","பணியிடம்","కార్యస్థలం"],
+    ["Virtual Laboratory","மெய்நிகர் ஆய்வகம்","వర్చువల్ ప్రయోగశాల"],
+    ["STEM Subjects","STEM பாடங்கள்","STEM విషయాలు"],
+    ["Quiz Arena","வினாடி வினா","క్విజ్ పోటీ"],
+    ["Achievements","சாதனைகள்","విజయాలు"],
+    ["Logout","வெளியேறு","లాగ్ అవుట్"],
+    ["STEM Explorer","STEM ஆராய்ச்சியாளர்","STEM అన్వేషకుడు"],
+
+    ["Physics","இயற்பியல்","భౌతిక శాస్త్రం"],
+    ["Chemistry","வேதியியல்","రసాయన శాస్త్రం"],
+    ["Biology","உயிரியல்","జీవ శాస్త్రం"],
+    ["Mathematics","கணிதம்","గణితం"],
+    ["All Subjects","அனைத்து பாடங்கள்","అన్ని విషయాలు"],
+    ["Choose a Subject","பாடத்தைத் தேர்ந்தெடுக்கவும்","విషయాన్ని ఎంచుకోండి"],
+
+    ["Explore. Experiment.","ஆராயுங்கள். பரிசோதியுங்கள்.","అన్వేషించండి. ప్రయోగించండి."],
+    ["Understand everything.","அனைத்தையும் புரிந்துகொள்ளுங்கள்.","ప్రతిదీ అర్థం చేసుకోండి."],
+    ["Launch Virtual Lab","மெய்நிகர் ஆய்வகத்தைத் திறக்கவும்","వర్చువల్ ల్యాబ్‌ను తెరవండి"],
+    ["Explore Experiments","பரிசோதனைகளை ஆராயுங்கள்","ప్రయోగాలను అన్వేషించండి"],
+    ["View All","அனைத்தையும் காண்க","అన్నీ చూడండి"],
+    ["Learning Overview","கற்றல் கண்ணோட்டம்","అభ్యాస సమీక్ష"],
+    ["Choose Your Learning Level","கற்றல் நிலையைத் தேர்ந்தெடுக்கவும்","మీ అభ్యాస స్థాయిని ఎంచుకోండి"],
+    ["Experiments Completed","முடிக்கப்பட்ட பரிசோதனைகள்","పూర్తయిన ప్రయోగాలు"],
+    ["Knowledge Points","அறிவு மதிப்பெண்கள்","జ్ఞాన పాయింట్లు"],
+    ["Badges Earned","பெற்ற பதக்கங்கள்","సాధించిన బ్యాడ్జ్‌లు"],
+    ["Quizzes Completed","முடிக்கப்பட்ட வினாடி வினாக்கள்","పూర్తయిన క్విజ్‌లు"],
+
+    ["Experiment Collection","பரிசோதனைத் தொகுப்பு","ప్రయోగాల సమాహారం"],
+    ["Simulation Workspace","உருவகப்படுத்தல் பகுதி","అనుకరణ కార్యస్థలం"],
+    ["Experiment Controls","பரிசோதனைக் கட்டுப்பாடுகள்","ప్రయోగ నియంత్రణలు"],
+    ["INTERACTIVE","ஊடாடும்","ఇంటరాక్టివ్"],
+    ["LIVE","நேரடி","ప్రత్యక్షం"],
+    ["Experiment","பரிசோதனை","ప్రయోగం"],
+    ["Formula","சூத்திரம்","సూత్రం"],
+    ["Explanation","விளக்கம்","వివరణ"],
+    ["Science Behind the Experiment","பரிசோதனையின் அறிவியல்","ప్రయోగం వెనుక ఉన్న విజ్ఞానం"],
+
+    ["Start","தொடங்கு","ప్రారంభించు"],
+    ["Pause","இடைநிறுத்து","విరామం"],
+    ["Play","இயக்கு","నడుపు"],
+    ["Resume","தொடர்க","కొనసాగించు"],
+    ["Stop","நிறுத்து","ఆపు"],
+    ["Reset","மீட்டமை","రీసెట్"],
+    ["Submit","சமர்ப்பி","సమర్పించు"],
+    ["Next","அடுத்து","తదుపరి"],
+    ["Next Question","அடுத்த கேள்வி","తదుపరి ప్రశ్న"],
+    ["Complete Experiment","பரிசோதனையை முடி","ప్రయోగాన్ని పూర్తి చేయండి"],
+    ["Back to Laboratory","ஆய்வகத்திற்குத் திரும்பு","ప్రయోగశాలకు తిరిగి వెళ్ళండి"],
+
+    ["Ready","தயார்","సిద్ధం"],
+    ["Running","இயங்குகிறது","నడుస్తోంది"],
+    ["Paused","இடைநிறுத்தப்பட்டது","విరామంలో ఉంది"],
+    ["Stopped","நிறுத்தப்பட்டது","ఆపబడింది"],
+    ["Status","நிலை","స్థితి"],
+    ["Speed","வேகம்","వేగం"],
+    ["Distance","தூரம்","దూరం"],
+    ["Acceleration","முடுக்கம்","త్వరణం"],
+    ["Force","விசை","బలం"],
+    ["Mass","நிறை","ద్రవ్యరాశి"],
+    ["Angle","கோணம்","కోణం"],
+    ["Length","நீளம்","పొడవు"],
+    ["Gravity","ஈர்ப்பு விசை","గురుత్వాకర్షణ"],
+    ["Voltage","மின்னழுத்தம்","వోల్టేజ్"],
+    ["Resistance","மின்தடை","నిరోధం"],
+    ["Current","மின்னோட்டம்","విద్యుత్ ప్రవాహం"],
+    ["Temperature","வெப்பநிலை","ఉష్ణోగ్రత"],
+    ["Volume","கனஅளவு","ఘనపరిమాణం"],
+    ["Frequency","அதிர்வெண்","పౌనఃపున్యం"],
+    ["Concentration","செறிவு","సాంద్రత"],
+
+    ["Question","கேள்வி","ప్రశ్న"],
+    ["Answer","பதில்","సమాధానం"],
+    ["Score","மதிப்பெண்","స్కోర్"],
+    ["Correct","சரி","సరైనది"],
+    ["Incorrect","தவறு","తప్పు"],
+    ["Start Challenge","சவாலைத் தொடங்கு","సవాలును ప్రారంభించండి"],
+    ["Challenge Completed!","சவால் முடிந்தது!","సవాలు పూర్తయింది!"],
+    ["Try Another Quiz","மற்றொரு வினாடி வினாவை முயற்சிக்கவும்","మరొక క్విజ్ ప్రయత్నించండి"],
+
+    ["Electric Circuit Simulator","மின்சுற்று உருவகப்படுத்தி","విద్యుత్ వలయ అనుకరణ"],
+    ["Force and Motion","விசையும் இயக்கமும்","బలం మరియు చలనం"],
+    ["Light Reflection","ஒளி எதிரொளிப்பு","కాంతి పరావర్తనం"],
+    ["Projectile Motion Simulator","எறிபொருள் இயக்கம்","ప్రక్షేపక చలన అనుకరణ"],
+    ["Ramp & Friction","சாய்தளமும் உராய்வும்","వాలు మరియు ఘర్షణ"],
+    ["Car Motion & Braking","கார் இயக்கமும் பிரேக்கும்","కారు చలనం మరియు బ్రేకింగ్"],
+    ["Animated Magnetic Field","இயங்கும் காந்தப்புலம்","చలనశీల అయస్కాంత క్షేత్రం"],
+    ["Electromagnet & Coil","மின்காந்தமும் சுருளும்","విద్యుదయస్కాంతం మరియు కాయిల్"],
+    ["Electric Motor","மின்மோட்டார்","విద్యుత్ మోటారు"],
+    ["Simple Pendulum","தனி ஊசல்","సరళ లోలకం"],
+    ["Thermal Expansion","வெப்ப விரிவாக்கம்","ఉష్ణ విస్తరణ"],
+    ["Photoelectric Effect","ஒளிமின் விளைவு","కాంతి విద్యుత్ ప్రభావం"],
+    ["Electromagnetic Induction","மின்காந்தத் தூண்டல்","విద్యుదయస్కాంత ప్రేరణ"],
+
+    ["Photosynthesis Studio","ஒளிச்சேர்க்கை ஆய்வகம்","కిరణజన్య సంయోగక్రియ ప్రయోగశాల"],
+    ["Osmosis & Cell Membrane","சவ்வூடுபரவலும் செல்சவ்வும்","ద్రవాభిసరణ మరియు కణ త్వచం"],
+    ["Heartbeat & Circulation","இதயத்துடிப்பும் இரத்த ஓட்டமும்","హృదయ స్పందన మరియు రక్త ప్రసరణ"],
+    ["Cell Division (Mitosis)","செல் பிரிவு","కణ విభజన"],
+    ["DNA Replication Lab","DNA நகலாக்க ஆய்வகம்","DNA ప్రతిరూపణ ప్రయోగశాల"],
+    ["Neuron & Nerve Impulse","நரம்பணுவும் நரம்புத் தூண்டுதலும்","నాడీకణం మరియు నాడీ ప్రేరణ"],
+    ["Seed Germination & Growth","விதை முளைப்பும் வளர்ச்சியும்","విత్తన అంకురోత్పత్తి మరియు పెరుగుదల"],
+    ["Lungs & Breathing","நுரையீரலும் சுவாசமும்","ఊపిరితిత్తులు మరియు శ్వాసక్రియ"],
+
+    ["pH Indicator Laboratory","pH குறிகாட்டி ஆய்வகம்","pH సూచిక ప్రయోగశాల"],
+    ["Periodic Table Explorer","தனிம வரிசை அட்டவணை","ఆవర్తన పట్టిక అన్వేషణ"],
+    ["Chemical Bonding","வேதிப்பிணைப்பு","రసాయన బంధం"],
+    ["Chemical Reaction Rates","வேதிவினை வேகம்","రసాయన చర్యల వేగం"],
+    ["States of Matter","பொருளின் நிலைகள்","పదార్థ స్థితులు"],
+    ["Separation Techniques","பிரித்தெடுக்கும் முறைகள்","వేర్పాటు పద్ధతులు"],
+    ["Acid-Base Titration","அமில-கார அளவீடு","ఆమ్ల-క్షార టైట్రేషన్"],
+    ["Electrolysis of Water","நீரின் மின்னாற்பகுப்பு","నీటి విద్యుద్విశ్లేషణ"],
+    ["Gas Laws Simulator","வாயு விதிகள்","వాయు నియమాల అనుకరణ"],
+    ["Solubility Simulator","கரைதிறன் உருவகப்படுத்தி","ద్రావణీయత అనుకరణ"],
+    ["Paper Chromatography","காகித நிறப்பிரிகை","కాగితం క్రోమాటోగ్రఫీ"],
+    ["Chemical Reactions","வேதிவினைகள்","రసాయన చర్యలు"],
+
+    ["Graph Explorer","வரைபட ஆய்வு","గ్రాఫ్ అన్వేషణ"],
+    ["Quadratic Equations","இருபடிச் சமன்பாடுகள்","వర్గ సమీకరణాలు"],
+    ["Interactive Geometry","ஊடாடும் வடிவியல்","ఇంటరాక్టివ్ రేఖాగణితం"],
+    ["Trigonometry Simulator","முக்கோணவியல்","త్రికోణమితి అనుకరణ"],
+    ["Pythagoras Theorem","பிதாகரஸ் தேற்றம்","పైథాగరస్ సిద్ధాంతం"],
+    ["Probability Laboratory","நிகழ்தகவு ஆய்வகம்","సంభావ్యత ప్రయోగశాల"],
+    ["Statistics Visualizer","புள்ளியியல் காட்சிப்படுத்தல்","గణాంకాల దృశ్యీకరణ"],
+    ["Geometric Transformations","வடிவியல் மாற்றங்கள்","జ్యామితీయ పరివర్తనలు"],
+    ["Calculus — Derivatives","நுண்கணிதம் — வகைக்கெழுக்கள்","కలన గణితం — అవకలనాలు"],
+    ["Fractions Visualizer","பின்னங்களின் காட்சி","భిన్నాల దృశ్యీకరణ"]
+  ];
+
+  const dictionaries = {
+    ta: new Map(
+      rows.map(([en, ta]) => [
+        en.toLowerCase(), ta
+      ])
+    ),
+    te: new Map(
+      rows.map(([en, , te]) => [
+        en.toLowerCase(), te
+      ])
+    )
+  };
+
+  const originals = new WeakMap();
+  const modified = new Set();
+  const visual = new Set();
+
+  let active = null;
+  let scheduled = false;
+  let synthetic = false;
+
+  const protection = [
+    "button",
+    "#activeExperimentTitle",
+    "#pmathTitle",
+    "#chem4-title",
+    "#pageTitle",
+    "#plpStatus",
+    "#plbioStatus",
+    "#plxStatus",
+    "#pliStatus",
+    "#experimentResults strong",
+    "#experimentResults small",
+    "#plbio-metrics strong",
+    "#plbio-metrics small",
+    ".plbio-reading small",
+    ".plbio-reading strong",
+    ".plx-reading small",
+    ".plx-reading strong"
+  ].join(",");
+
+  const css = document.createElement("style");
+
+  css.textContent = `
+    .pl-extra-language-visual {
+      font-size: 0 !important;
+    }
+
+    .pl-extra-language-visual::after {
+      content: attr(data-pl-extra-text);
+      font-size: var(--pl-extra-font, 16px);
+      line-height: 1.4;
+      font-weight: inherit;
+    }
+
+    .pl-extra-language-visual > span {
+      font-size: 0 !important;
+    }
+  `;
+
+  document.head.append(css);
+
+  function translated(text) {
+    if (!active) return text;
+
+    const word = text.trim();
+    const dict = dictionaries[active];
+
+    if (!word) return text;
+
+    let result = dict.get(word.toLowerCase());
+
+    if (!result) {
+      const match = word.match(
+        /^([^\p{L}\p{N}]*)(.*?)([^\p{L}\p{N}]*)$/u
+      );
+
+      if (match) {
+        const t = dict.get(
+          match[2].trim().toLowerCase()
+        );
+
+        if (t) {
+          result = match[1] + t + match[3];
+        }
+      }
+    }
+
+    if (!result) {
+      const match = word.match(
+        /^(.{2,50}?)(\s*:\s*)(.+)$/s
+      );
+
+      if (match) {
+        const a = dict.get(
+          match[1].trim().toLowerCase()
+        );
+
+        const b = dict.get(
+          match[3].trim().toLowerCase()
+        );
+
+        if (a || b) {
+          result =
+            (a || match[1]) +
+            match[2] +
+            (b || match[3]);
+        }
+      }
+    }
+
+    if (!result) return text;
+
+    return (
+      text.match(/^\s*/)[0] +
+      result +
+      text.match(/\s*$/)[0]
+    );
+  }
+
+  function showVisual(element) {
+    if (
+      !active ||
+      !element?.isConnected
+    ) return;
+
+    const english = element.textContent;
+    const result = translated(english).trim();
+
+    if (result === english.trim()) return;
+
+    if (!element.classList.contains(
+      "pl-extra-language-visual"
+    )) {
+      element.style.setProperty(
+        "--pl-extra-font",
+        getComputedStyle(element).fontSize
+      );
+    }
+
+    element.dataset.plExtraText = result;
+
+    element.classList.add(
+      "pl-extra-language-visual"
+    );
+
+    visual.add(element);
+  }
+
+  function processText(node) {
+    if (
+      !node?.parentElement ||
+      !node.isConnected ||
+      !active
+    ) return;
+
+    const parent = node.parentElement;
+
+    if (parent.closest(
+      "script,style,noscript,textarea,pre,code,#languageSelect"
+    )) return;
+
+    const special = parent.closest(
+      protection
+    );
+
+    if (special) {
+      showVisual(special);
+      return;
+    }
+
+    const saved = originals.get(node);
+
+    const english =
+      saved && node.nodeValue === saved.rendered
+        ? saved.english
+        : node.nodeValue;
+
+    const next = translated(english);
+
+    if (next !== english) {
+      originals.set(node, {
+        english,
+        rendered: next
+      });
+
+      modified.add(node);
+
+      if (node.nodeValue !== next) {
+        node.nodeValue = next;
+      }
+    }
+  }
+
+  function process(root) {
+    if (
+      !active ||
+      !root?.isConnected
+    ) return;
+
+    if (root.nodeType === Node.TEXT_NODE) {
+      processText(root);
+      return;
+    }
+
+    if (
+      root.nodeType !== Node.ELEMENT_NODE
+    ) return;
+
+    if (root.matches(
+      "script,style,noscript,textarea,pre,code"
+    )) return;
+
+    if (root.matches(protection)) {
+      showVisual(root);
+      return;
+    }
+
+    const walker = document.createTreeWalker(
+      root,
+      NodeFilter.SHOW_TEXT
+    );
+
+    let text;
+
+    while ((text = walker.nextNode())) {
+      processText(text);
+    }
+  }
+
+  function restore() {
+    active = null;
+
+    for (const node of modified) {
+      const record = originals.get(node);
+
+      if (
+        node.isConnected &&
+        record &&
+        node.nodeValue === record.rendered
+      ) {
+        node.nodeValue = record.english;
+      }
+
+      originals.delete(node);
+    }
+
+    modified.clear();
+
+    for (const element of visual) {
+      element.classList.remove(
+        "pl-extra-language-visual"
+      );
+
+      element.style.removeProperty(
+        "--pl-extra-font"
+      );
+
+      delete element.dataset.plExtraText;
+    }
+
+    visual.clear();
+  }
+
+  function apply(lang) {
+    active = lang;
+
+    const select = document.getElementById(
+      "languageSelect"
+    );
+
+    if (select) {
+      select.value = lang;
+    }
+
+    document.documentElement.lang = lang;
+
+    process(document.body);
+  }
+
+  function begin(lang) {
+    restore();
+
+    const select = document.getElementById(
+      "languageSelect"
+    );
+
+    if (!select) return;
+
+    // Return original translator to English first.
+    synthetic = true;
+
+    select.value = "en";
+
+    select.dispatchEvent(
+      new Event("change", {
+        bubbles: true
+      })
+    );
+
+    synthetic = false;
+
+    try {
+      localStorage.setItem(
+        "pocketlab-extra-language",
+        lang
+      );
+    } catch {}
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        apply(lang);
+      });
+    });
+  }
+
+  // Capture the selection before old handlers.
+  window.addEventListener(
+    "change",
+    event => {
+      if (
+        event.target?.id !== "languageSelect" ||
+        synthetic
+      ) return;
+
+      const lang = event.target.value;
+
+      if (lang === "ta" || lang === "te") {
+        event.stopImmediatePropagation();
+        begin(lang);
+      } else {
+        try {
+          localStorage.removeItem(
+            "pocketlab-extra-language"
+          );
+        } catch {}
+
+        restore();
+      }
+    },
+    true
+  );
+
+  function initialize() {
+    const select = document.getElementById(
+      "languageSelect"
+    );
+
+    if (!select) return;
+
+    // Automatically add Tamil and Telugu options.
+    for (const [value, label] of [
+      ["ta", "தமிழ்"],
+      ["te", "తెలుగు"]
+    ]) {
+      if (!select.querySelector(
+        `option[value="${value}"]`
+      )) {
+        const option = document.createElement(
+          "option"
+        );
+
+        option.value = value;
+        option.textContent = label;
+
+        select.append(option);
+      }
+    }
+
+    // Translate new experiment content as it appears.
+    const observer = new MutationObserver(
+      records => {
+        if (!active || scheduled) return;
+
+        scheduled = true;
+
+        requestAnimationFrame(() => {
+          scheduled = false;
+
+          if (!active) return;
+
+          const nodes = new Set();
+
+          for (const record of records) {
+            if (record.type === "characterData") {
+              nodes.add(record.target);
+            }
+
+            for (const node of record.addedNodes) {
+              nodes.add(node);
+            }
+          }
+
+          nodes.forEach(process);
+        });
+      }
+    );
+
+    observer.observe(document.body, {
+      subtree: true,
+      childList: true,
+      characterData: true
+    });
+
+    let savedLanguage = null;
+
+    try {
+      savedLanguage = localStorage.getItem(
+        "pocketlab-extra-language"
+      );
+    } catch {}
+
+    if (
+      savedLanguage === "ta" ||
+      savedLanguage === "te"
+    ) {
+      begin(savedLanguage);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initialize
+    );
+  } else {
+    initialize();
+  }
+})();
+</script>
+
+<!-- POCKETLAB PREMIUM DASHBOARD LAYOUT FIX -->
+<style>
+/* Keep the hero heading on clean lines */
+@media (min-width: 1101px) {
+  #dashboard .hero {
+    gap: 20px;
+  }
+
+  #dashboard .hero-content {
+    flex: 1 1 auto;
+    max-width: 760px;
+    min-width: 0;
+  }
+
+  #dashboard .hero h1 {
+    font-size: clamp(38px, 3.1vw, 52px);
+    line-height: 1.15;
+    letter-spacing: -1.8px;
+  }
+
+  #dashboard .hero h1 span {
+    white-space: nowrap;
+  }
+
+  #dashboard .hero-art {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 225px;
+  }
+}
+
+@media (max-width: 1100px) {
+  #dashboard .hero h1 span {
+    white-space: normal;
+  }
+}
+
+/* Put the login controls neatly in the top bar */
+.top-actions .pl-auth-docked {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  inset: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  z-index: auto !important;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+.top-actions:has(.pl-auth-docked) > .avatar,
+.top-actions:has(.pl-auth-docked) > .student-name {
+  display: none !important;
+}
+
+@media (max-width: 650px) {
+  .top-actions .pl-auth-docked {
+    font-size: 11px;
+  }
+}
+</style>
+
+<script>
+(() => {
+  "use strict";
+
+  if (window.__pocketlabHeaderLayoutFix) return;
+  window.__pocketlabHeaderLayoutFix = true;
+
+  function dockLogout() {
+    const toolbar = document.querySelector(".top-actions");
+    if (!toolbar) return false;
+
+    const logout = [...document.querySelectorAll("button")]
+      .find(button =>
+        /^(logout|log out|ಲಾಗ್ ಔಟ್|लॉग आउट|வெளியேறு|లాగ్ అవుట్)$/i
+          .test(button.textContent.trim())
+      );
+
+    if (!logout) return false;
+
+    // Find the existing floating login box.
+    let node = logout.parentElement;
+    let widget = null;
+
+    while (node && node !== document.body) {
+      const position = getComputedStyle(node).position;
+      const rect = node.getBoundingClientRect();
+
+      if (
+        (position === "fixed" || position === "absolute") &&
+        rect.width >= 100 &&
+        rect.width <= 420 &&
+        rect.height <= 160
+      ) {
+        widget = node;
+        break;
+      }
+
+      node = node.parentElement;
+    }
+
+    if (!widget) return false;
+
+    widget.classList.add("pl-auth-docked");
+
+    if (!toolbar.contains(widget)) {
+      toolbar.appendChild(widget);
+    }
+
+    return true;
+  }
+
+  const observer = new MutationObserver(() => {
+    if (dockLogout()) observer.disconnect();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  if (dockLogout()) observer.disconnect();
+})();
+</script>
+<!-- END POCKETLAB DASHBOARD FIX -->
